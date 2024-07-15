@@ -5,8 +5,6 @@ require("dotenv").config();
 const apiKey = process.env.API_KEY;
 
 console.log("API Key:", apiKey);
-
-// Your existing code here
 document.addEventListener("DOMContentLoaded", () => {
   const baseCurrencySelect = document.getElementById("base-currency");
   const targetCurrencySelect = document.getElementById("target-currency");
