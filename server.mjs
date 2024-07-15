@@ -1,6 +1,6 @@
-const express = require("express");
-const fetch = require("node-fetch");
-const dotenv = require("dotenv");
+import express from "express";
+import fetch from "node-fetch";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -32,15 +32,12 @@ app.get("/api/symbols", async (req, res) => {
 app.get("/api/rates", async (req, res) => {
   const { base, symbols } = req.query;
   try {
-    const response = await fetch(
-      `${apiUrl}/latest?base=${base}&symbols=${symbols}`,
-      {
-        method: "GET",
-        headers: {
-          apikey: apiKey,
-        },
-      }
-    );
+    const response = await fetch(`${apiUrl}/latest?base=${base}&symbols=${symbols}`, {
+      method: "GET",
+      headers: {
+        apikey: apiKey,
+      },
+    });
     const data = await response.json();
     res.json(data);
   } catch (error) {

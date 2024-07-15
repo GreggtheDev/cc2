@@ -1,20 +1,16 @@
 {
-  "name": "cc2",
+  "name": "your-project-name",
   "version": "1.0.0",
-  "description": "Currecy Converter Application",
-  "main": "server.js",
+  "main": "server.mjs",
+  "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.mjs"
   },
-  "keywords": [],
-  "author": "Gregg <greggthedev@gmail.com> (https://github.com/GreggtheDev/)",
-  "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.2",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "node-fetch": "^3.3.2",
-    "sequelize": "^6.37.3",
-    "sqlite3": "^5.1.7"
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "node-fetch": "^3.0.0"
+  }
+}
   }
 }
