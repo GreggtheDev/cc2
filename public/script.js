@@ -37,6 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch the exchange rate data
   async function fetchExchangeRate(baseCurrency, targetCurrency) {
     try {
+      if (!baseCurrency || !targetCurrency) {
+        throw new Error("Both base and target currencies must be selected.");
+      }
       const url = `${apiUrl}/rates?base=${baseCurrency}&symbols=${targetCurrency}`;
       console.log("Fetching exchange rate from URL:", url); // Debug log
       const response = await fetch(url);
