@@ -1,27 +1,15 @@
-// Load environment variables from .env file
-require("dotenv").config();
-
-// Access the API key from environment variables
-const apiKey = process.env.API_KEY;
-
-console.log("API Key:", apiKey);
 document.addEventListener("DOMContentLoaded", () => {
   const baseCurrencySelect = document.getElementById("base-currency");
   const targetCurrencySelect = document.getElementById("target-currency");
   const amountInput = document.getElementById("amount");
   const convertedAmountDisplay = document.getElementById("converted-amount");
 
-  const apiUrl = "https://api.apilayer.com/exchangerates_data";
+  const apiUrl = "/api"; // Use the local server endpoints
 
   // Fetch and populate the dropdown menus with available currencies
   async function populateCurrencyDropdowns() {
     try {
-      const response = await fetch(`${apiUrl}/symbols`, {
-        method: "GET",
-        headers: {
-          apikey: apiKey,
-        },
-      });
+      const response = await fetch(`${apiUrl}/symbols`);
       if (!response.ok) throw new Error(`Error: ${response.status}`);
       const data = await response.json();
       const currencies = Object.keys(data.symbols);
@@ -49,18 +37,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch the exchange rate data
   async function fetchExchangeRate(baseCurrency, targetCurrency) {
     try {
-      const url = `${apiUrl}/latest?base=${baseCurrency}&symbols=${targetCurrency}`;
+      const url = `${apiUrl}/rates?base=${baseCurrency}&symbols=${targetCurrency}`;
       console.log("Fetching exchange rate from URL:", url); // Debug log
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          apikey: apiKey,
-        },
-      });
-      const data = await response.json();
+      const response = await fetch(url);
       if (!response.ok) {
-        throw new Error(`Error: ${response.status}, Message: ${data.message}`);
+        const errorData = await response.json();
+        throw new Error(
+          `Error: ${response.status}, Message: ${errorData.error}`
+        );
       }
+      const data = await response.json();
       console.log(
         `Exchange rate from ${baseCurrency} to ${targetCurrency}:`,
         data.rates[targetCurrency]
