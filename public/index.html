@@ -1,26 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+  <!-- Declares the document type as HTML and sets the language to English -->
   <head>
+    <!-- The head section contains metadata and links to external resources -->
     <meta charset="UTF-8" />
+    <!-- Sets the character encoding to UTF-8, which includes almost all characters from all human languages -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Sets the viewport to make the website look good on all devices -->
     <title>Currency Converter</title>
+    <!-- Sets the title of the web page that appears in the browser tab -->
     <link rel="stylesheet" href="styles.css" />
+    <!-- Links an external CSS file for styling the page -->
   </head>
   <body>
+    <!-- The body section contains the content that is displayed on the web page -->
     <h1>Currency Converter</h1>
+    <!-- Main heading of the page -->
     <div class="converter">
+      <!-- A container for the currency converter elements, styled with a class "converter" -->
       <label for="base-currency">Base Currency:</label>
+      <!-- Label for the base currency dropdown -->
       <select id="base-currency"></select>
+      <!-- Dropdown menu for selecting the base currency, identified by "base-currency" -->
       <label for="amount">Amount:</label>
+      <!-- Label for the amount input field -->
       <input type="number" id="amount" value="1" min="0" />
+      <!-- Input field for entering the amount to be converted, identified by "amount", default value is 1, minimum value is 0 -->
       <label for="target-currency">Target Currency:</label>
+      <!-- Label for the target currency dropdown -->
       <select id="target-currency"></select>
+      <!-- Dropdown menu for selecting the target currency, identified by "target-currency" -->
       <p>Converted Amount: <span id="converted-amount"></span></p>
+      <!-- Paragraph displaying the converted amount, which will be updated dynamically, span identified by "converted-amount" -->
       <button id="historical-rates">View Historical Rates</button>
+      <!-- Button to view historical exchange rates, identified by "historical-rates" -->
       <div id="historical-rates-container"></div>
+      <!-- Container to display historical rates information, identified by "historical-rates-container" -->
       <button id="save-favorite">Save Favorite</button>
+      <!-- Button to save the selected currency pair as a favorite, identified by "save-favorite" -->
       <div id="favorite-currency-pairs"></div>
+      <!-- Container to display saved favorite currency pairs, identified by "favorite-currency-pairs" -->
     </div>
     <script src="script.js"></script>
+    <!-- Links an external JavaScript file for adding functionality to the page -->
   </body>
 </html>
