@@ -1,55 +1,82 @@
 body {
   font-family: Arial, sans-serif;
+  /* Sets the font for the entire document to Arial, with sans-serif as a fallback */
   display: flex;
+  /* Uses Flexbox layout for the body */
   justify-content: center;
+  /* Centers content horizontally */
   align-items: center;
+  /* Centers content vertically */
   height: 100vh;
+  /* Sets the height of the body to 100% of the viewport height */
   margin: 0;
+  /* Removes default margin from the body */
   background-color: #f0f0f0;
+  /* Sets a light gray background color for the body */
 }
 
 h1 {
   text-align: center;
+  /* Centers the text of the h1 element */
 }
 
 .converter {
   background-color: white;
+  /* Sets a white background color for the converter div */
   padding: 30px;
+  /* Adds 30 pixels of padding inside the converter div */
   border-radius: 5px;
+  /* Rounds the corners of the converter div with a 5-pixel radius */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  /* Adds a subtle shadow around the converter div */
 }
 
 .converter label,
 .converter select,
 .converter input {
   display: block;
+  /* Ensures labels, select elements, and input elements are displayed as block-level elements */
   margin-bottom: 10px;
+  /* Adds 10 pixels of space below each element */
 }
 
 .converter button {
   display: block;
+  /* Ensures buttons are displayed as block-level elements */
   margin-top: 10px;
+  /* Adds 10 pixels of space above the button */
   margin-bottom: 20px;
+  /* Adds 20 pixels of space below the button */
   cursor: pointer;
+  /* Changes the cursor to a pointer when hovering over the button */
   background-color: #3498db;
+  /* Sets the button background color to a blue shade */
   color: white;
+  /* Sets the text color of the button to white */
   border: none;
+  /* Removes the default border of the button */
   border-radius: 5px;
+  /* Rounds the corners of the button with a 5-pixel radius */
   padding: 5px 10px;
+  /* Adds 5 pixels of vertical and 10 pixels of horizontal padding inside the button */
 }
 
 .converter button:hover {
   background-color: #2980b9;
+  /* Changes the background color of the button to a darker blue when hovering */
 }
 
 p {
   margin-top: 20px;
+  /* Adds 20 pixels of space above paragraphs */
 }
 
 #historical-rates-container {
   margin-top: 20px;
+  /* Adds 20 pixels of space above the historical rates container */
 }
 
 #favorite-currency-pairs {
   margin-top: 20px;
+  /* Adds 20 pixels of space above the favorite currency pairs container */
 }
