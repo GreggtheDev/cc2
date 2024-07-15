@@ -9,9 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch and populate the dropdown menus with available currencies
   async function populateCurrencyDropdowns() {
     try {
+      console.log("Fetching currency symbols...");
       const response = await fetch(`${apiUrl}/symbols`);
       if (!response.ok) throw new Error(`Error: ${response.status}`);
       const data = await response.json();
+      console.log("Currency symbols fetched:", data);
       const currencies = Object.keys(data.symbols);
 
       currencies.forEach((currency) => {
