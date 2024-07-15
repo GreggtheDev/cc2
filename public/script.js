@@ -1,99 +1,82 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const baseCurrencySelect = document.getElementById("base-currency");
-  const targetCurrencySelect = document.getElementById("target-currency");
-  const amountInput = document.getElementById("amount");
-  const convertedAmountDisplay = document.getElementById("converted-amount");
+const API_KEY = "cur_live_w4H0x7eUy6n7WD2OoANxCd8qr3JK3hfchT4bkdQz";
+const API_URL = `https://api.exchangerate-api.com/v4/latest/`;
 
-  const apiUrl = "/api"; // Use the local server endpoints
+async function fetchExchangeRates(baseCurrency) {
+  try {
+    const response = await fetch(`${API_URL}${baseCurrency}?apikey=${API_KEY}`);
+    const data = await response.json();
+    return data.rates;
+  } catch (error) {
+    console.error("Error fetching exchange rates:", error);
+    alert("Failed to fetch exchange rates. Please try again later.");
+  }
+}
 
-  // Fetch and populate the dropdown menus with available currencies
-  async function populateCurrencyDropdowns() {
-    try {
-      const response = await fetch(`${apiUrl}/symbols`);
-      if (!response.ok) throw new Error(`Error: ${response.status}`);
-      const data = await response.json();
-      const currencies = Object.keys(data.symbols);
+document.getElementById("convertBtn").addEventListener("click", async () => {
+  const baseCurrency = document.getElementById("baseCurrency").value;
+  const targetCurrency = document.getElementById("targetCurrency").value;
+  const amount = parseFloat(document.getElementById("amount").value);
 
-      currencies.forEach((currency) => {
-        const option1 = document.createElement("option");
-        option1.value = currency;
-        option1.textContent = currency;
-        baseCurrencySelect.appendChild(option1);
-
-        const option2 = document.createElement("option");
-        option2.value = currency;
-        option2.textContent = currency;
-        targetCurrencySelect.appendChild(option2);
-      });
-
-      // Set default values
-      baseCurrencySelect.value = "USD";
-      targetCurrencySelect.value = "EUR";
-    } catch (error) {
-      console.error("Error populating currency dropdowns:", error);
-    }
+  if (isNaN(amount) || amount <= 0) {
+    alert("Please enter a valid amount");
+    return;
   }
 
-  // Fetch the exchange rate data
-  async function fetchExchangeRate(baseCurrency, targetCurrency) {
-    try {
-      if (!baseCurrency || !targetCurrency) {
-        throw new Error("Both base and target currencies must be selected.");
-      }
-      const url = `${apiUrl}/rates?base=${baseCurrency}&symbols=${targetCurrency}`;
-      console.log("Fetching exchange rate from URL:", url); // Debug log
-      const response = await fetch(url);
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-          `Error: ${response.status}, Message: ${errorData.error}`
-        );
-      }
-      const data = await response.json();
-      console.log(
-        `Exchange rate from ${baseCurrency} to ${targetCurrency}:`,
-        data.rates[targetCurrency]
-      ); // Debug log
-      return data.rates[targetCurrency];
-    } catch (error) {
-      console.error("Error fetching exchange rate:", error);
-      return null;
-    }
-  }
+  const rates = await fetchExchangeRates(baseCurrency);
+  const conversionRate = rates[targetCurrency];
+  const convertedAmount = (amount * conversionRate).toFixed(2);
 
-  // Convert the currency
-  async function convertCurrency() {
-    const baseCurrency = baseCurrencySelect.value;
-    const targetCurrency = targetCurrencySelect.value;
-    const amount = parseFloat(amountInput.value);
-
-    if (isNaN(amount) || amount <= 0) {
-      convertedAmountDisplay.textContent = "Invalid amount";
-      return;
-    }
-
-    const exchangeRate = await fetchExchangeRate(baseCurrency, targetCurrency);
-    if (exchangeRate) {
-      const convertedAmount = amount * exchangeRate;
-      console.log(`Converted amount: ${convertedAmount} ${targetCurrency}`); // Debug log
-      convertedAmountDisplay.textContent = `${convertedAmount.toFixed(
-        2
-      )} ${targetCurrency}`;
-    } else {
-      convertedAmountDisplay.textContent = "Error fetching rate";
-    }
-  }
-
-  // Event listeners for user interactions
-  baseCurrencySelect.addEventListener("change", convertCurrency);
-  targetCurrencySelect.addEventListener("change", convertCurrency);
-  amountInput.addEventListener("input", convertCurrency);
-
-  // Initialize the application
-  async function initialize() {
-    await populateCurrencyDropdowns();
-    convertCurrency();
-  }
-
-  initialize();
+  document.getElementById(
+    "convertedAmount"
+  ).innerText = `${amount} ${baseCurrency} = ${convertedAmount} ${targetCurrency}`;
 });
+
+document.getElementById("historyBtn").addEventListener("click", async () => {
+  const baseCurrency = document.getElementById("baseCurrency").value;
+  const targetCurrency = document.getElementById("targetCurrency").value;
+  const date = "2021-01-01"; // Hardcoded date for example
+
+  try {
+    const response = await fetch(
+      `${API_URL}${baseCurrency}/${date}?apikey=${API_KEY}`
+    );
+    const data = await response.json();
+    const historicalRate = data.rates[targetCurrency];
+
+    document.getElementById(
+      "historicalRate"
+    ).innerText = `Historical exchange rate on ${date}: 1 ${baseCurrency} = ${historicalRate} ${targetCurrency}`;
+  } catch (error) {
+    console.error("Error fetching historical rates:", error);
+    alert("Failed to fetch historical rates. Please try again later.");
+  }
+});
+
+const favoritePairs = [];
+
+document.getElementById("saveFavoriteBtn").addEventListener("click", () => {
+  const baseCurrency = document.getElementById("baseCurrency").value;
+  const targetCurrency = document.getElementById("targetCurrency").value;
+  const pair = `${baseCurrency}/${targetCurrency}`;
+
+  if (!favoritePairs.includes(pair)) {
+    favoritePairs.push(pair);
+    displayFavorites();
+  }
+});
+
+function displayFavorites() {
+  const favoritesList = document.getElementById("favoritesList");
+  favoritesList.innerHTML = "";
+
+  favoritePairs.forEach((pair) => {
+    const listItem = document.createElement("li");
+    listItem.innerText = pair;
+    listItem.addEventListener("click", () => {
+      const [base, target] = pair.split("/");
+      document.getElementById("baseCurrency").value = base;
+      document.getElementById("targetCurrency").value = target;
+    });
+    favoritesList.appendChild(listItem);
+  });
+}

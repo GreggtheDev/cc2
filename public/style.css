@@ -1,82 +1,77 @@
 body {
   font-family: Arial, sans-serif;
-  /* Sets the font for the entire document to Arial, with sans-serif as a fallback */
-  display: flex;
-  /* Uses Flexbox layout for the body */
-  justify-content: center;
-  /* Centers content horizontally */
-  align-items: center;
-  /* Centers content vertically */
-  height: 100vh;
-  /* Sets the height of the body to 100% of the viewport height */
+  background-color: #f4f4f4;
   margin: 0;
-  /* Removes default margin from the body */
-  background-color: #f0f0f0;
-  /* Sets a light gray background color for the body */
+  padding: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 h1 {
   text-align: center;
-  /* Centers the text of the h1 element */
+  color: #333;
 }
 
 .converter {
-  background-color: white;
-  /* Sets a white background color for the converter div */
-  padding: 30px;
-  /* Adds 30 pixels of padding inside the converter div */
-  border-radius: 5px;
-  /* Rounds the corners of the converter div with a 5-pixel radius */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  /* Adds a subtle shadow around the converter div */
+  display: flex;
+  flex-direction: column;
 }
 
-.converter label,
-.converter select,
-.converter input {
-  display: block;
-  /* Ensures labels, select elements, and input elements are displayed as block-level elements */
-  margin-bottom: 10px;
-  /* Adds 10 pixels of space below each element */
-}
-
-.converter button {
-  display: block;
-  /* Ensures buttons are displayed as block-level elements */
+label {
   margin-top: 10px;
-  /* Adds 10 pixels of space above the button */
-  margin-bottom: 20px;
-  /* Adds 20 pixels of space below the button */
-  cursor: pointer;
-  /* Changes the cursor to a pointer when hovering over the button */
-  background-color: #3498db;
-  /* Sets the button background color to a blue shade */
+}
+
+input,
+select,
+button {
+  margin-top: 5px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background: #28a745;
   color: white;
-  /* Sets the text color of the button to white */
-  border: none;
-  /* Removes the default border of the button */
-  border-radius: 5px;
-  /* Rounds the corners of the button with a 5-pixel radius */
-  padding: 5px 10px;
-  /* Adds 5 pixels of vertical and 10 pixels of horizontal padding inside the button */
+  cursor: pointer;
+  margin-top: 15px;
 }
 
-.converter button:hover {
-  background-color: #2980b9;
-  /* Changes the background color of the button to a darker blue when hovering */
+button:hover {
+  background: #218838;
 }
 
-p {
+#convertedAmount,
+#historicalRate {
   margin-top: 20px;
-  /* Adds 20 pixels of space above paragraphs */
+  font-size: 18px;
+  color: #333;
 }
 
-#historical-rates-container {
+#favoritesList {
   margin-top: 20px;
-  /* Adds 20 pixels of space above the historical rates container */
+  list-style-type: none;
+  padding: 0;
 }
 
-#favorite-currency-pairs {
-  margin-top: 20px;
-  /* Adds 20 pixels of space above the favorite currency pairs container */
+#favoritesList li {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f9f9f9;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+#favoritesList li:hover {
+  background: #e9ecef;
 }
