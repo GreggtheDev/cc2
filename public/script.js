@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "favorite-currency-pairs"
   );
 
-  const apiKey = "YOUR_API_KEY";
+  const apiKey = "YOURfca_live_dgMfbpbcfn2T8gaTaNyYq3fSRx34vHeFagUP7hdV";
   const apiUrl = "https://api.apilayer.com/exchangerates_data";
 
   let favoriteCurrencyPairs = [];
