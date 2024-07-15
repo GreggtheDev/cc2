@@ -84,20 +84,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Event listeners for user interactions
-  baseCurrencySelect.addEventListener("change", convertCurrency);
-  targetCurrencySelect.addEventListener("change", convertCurrency);
-  amountInput.addEventListener("input", convertCurrency);
-
   // Initialize the application
   async function initialize() {
     await populateCurrencyDropdowns();
-    // Add a small delay to ensure the dropdowns are populated before setting default values
-    setTimeout(() => {
-      baseCurrencySelect.value = "USD";
-      targetCurrencySelect.value = "EUR";
-      convertCurrency();
-    }, 500);
+    // Ensure the dropdowns are populated before setting default values and adding event listeners
+    baseCurrencySelect.addEventListener("change", convertCurrency);
+    targetCurrencySelect.addEventListener("change", convertCurrency);
+    amountInput.addEventListener("input", convertCurrency);
+
+    // Set default values and perform initial conversion
+    baseCurrencySelect.value = "USD";
+    targetCurrencySelect.value = "EUR";
+    convertCurrency();
   }
 
   initialize();
