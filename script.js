@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "favorite-currency-pairs"
   );
 
-  const apiKey = "YOUR_API_KEY_HERE"; // Replace with your API key
+  const apiKey = "fca_live_dgMfbpbcfn2T8gaTaNyYq3fSR"; // My API key
 
   const populateCurrencyDropdowns = async () => {
     try {
