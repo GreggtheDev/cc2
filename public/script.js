@@ -1,10 +1,18 @@
+// Load environment variables from .env file
+require("dotenv").config();
+
+// Access the API key from environment variables
+const apiKey = process.env.API_KEY;
+
+console.log("API Key:", apiKey);
+
+// Your existing code here
 document.addEventListener("DOMContentLoaded", () => {
   const baseCurrencySelect = document.getElementById("base-currency");
   const targetCurrencySelect = document.getElementById("target-currency");
   const amountInput = document.getElementById("amount");
   const convertedAmountDisplay = document.getElementById("converted-amount");
 
-  const apiKey = "fca_live_dgMfbpbcfn2T8gaTaNyYq3fSRx34vHeFagUP7hdV";
   const apiUrl = "https://api.apilayer.com/exchangerates_data";
 
   // Fetch and populate the dropdown menus with available currencies
