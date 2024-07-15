@@ -1,54 +1,104 @@
-import express from "express";
-import fetch from "node-fetch";
-import dotenv from "dotenv";
+document.addEventListener("DOMContentLoaded", () => {
+  const baseCurrencySelect = document.getElementById("base-currency");
+  const targetCurrencySelect = document.getElementById("target-currency");
+  const amountInput = document.getElementById("amount");
+  const convertedAmountDisplay = document.getElementById("converted-amount");
 
-dotenv.config();
+  const apiUrl = "/api"; // Use the local server endpoints
 
-const app = express();
-const port = process.env.PORT || 3000;
-const apiKey = process.env.API_KEY;
-const apiUrl = "https://api.apilayer.com/exchangerates_data";
+  // Fetch and populate the dropdown menus with available currencies
+  async function populateCurrencyDropdowns() {
+    try {
+      const response = await fetch(`${apiUrl}/symbols`);
+      if (!response.ok) throw new Error(`Error: ${response.status}`);
+      const data = await response.json();
+      const currencies = Object.keys(data.symbols);
 
-app.use(express.static("public"));
+      currencies.forEach((currency) => {
+        const option1 = document.createElement("option");
+        option1.value = currency;
+        option1.textContent = currency;
+        baseCurrencySelect.appendChild(option1);
 
-// Endpoint to get symbols
-app.get("/api/symbols", async (req, res) => {
-  try {
-    const response = await fetch(`${apiUrl}/symbols`, {
-      method: "GET",
-      headers: {
-        apikey: apiKey,
-      },
-    });
-    const data = await response.json();
-    res.json(data);
-  } catch (error) {
-    console.error("Error fetching symbols:", error);
-    res.status(500).json({ error: "Error fetching symbols" });
+        const option2 = document.createElement("option");
+        option2.value = currency;
+        option2.textContent = currency;
+        targetCurrencySelect.appendChild(option2);
+      });
+
+      // Set default values
+      baseCurrencySelect.value = "USD";
+      targetCurrencySelect.value = "EUR";
+    } catch (error) {
+      console.error("Error populating currency dropdowns:", error);
+    }
   }
-});
 
-// Endpoint to get exchange rate
-app.get("/api/rates", async (req, res) => {
-  const { base, symbols } = req.query;
-  try {
-    const response = await fetch(
-      `${apiUrl}/latest?base=${base}&symbols=${symbols}`,
-      {
-        method: "GET",
-        headers: {
-          apikey: apiKey,
-        },
+  // Fetch the exchange rate data
+  async function fetchExchangeRate(baseCurrency, targetCurrency) {
+    try {
+      if (!baseCurrency || !targetCurrency) {
+        throw new Error("Both base and target currencies must be selected.");
       }
-    );
-    const data = await response.json();
-    res.json(data);
-  } catch (error) {
-    console.error("Error fetching exchange rate:", error);
-    res.status(500).json({ error: "Error fetching exchange rate" });
+      const url = `${apiUrl}/rates?base=${baseCurrency}&symbols=${targetCurrency}`;
+      console.log("Fetching exchange rate from URL:", url); // Debug log
+      const response = await fetch(url);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          `Error: ${response.status}, Message: ${errorData.error}`
+        );
+      }
+      const data = await response.json();
+      console.log(
+        `Exchange rate from ${baseCurrency} to ${targetCurrency}:`,
+        data.rates[targetCurrency]
+      ); // Debug log
+      return data.rates[targetCurrency];
+    } catch (error) {
+      console.error("Error fetching exchange rate:", error);
+      return null;
+    }
   }
-});
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  // Convert the currency
+  async function convertCurrency() {
+    const baseCurrency = baseCurrencySelect.value;
+    const targetCurrency = targetCurrencySelect.value;
+    const amount = parseFloat(amountInput.value);
+
+    if (isNaN(amount) || amount <= 0) {
+      convertedAmountDisplay.textContent = "Invalid amount";
+      return;
+    }
+
+    const exchangeRate = await fetchExchangeRate(baseCurrency, targetCurrency);
+    if (exchangeRate) {
+      const convertedAmount = amount * exchangeRate;
+      console.log(`Converted amount: ${convertedAmount} ${targetCurrency}`); // Debug log
+      convertedAmountDisplay.textContent = `${convertedAmount.toFixed(
+        2
+      )} ${targetCurrency}`;
+    } else {
+      convertedAmountDisplay.textContent = "Error fetching rate";
+    }
+  }
+
+  // Event listeners for user interactions
+  baseCurrencySelect.addEventListener("change", convertCurrency);
+  targetCurrencySelect.addEventListener("change", convertCurrency);
+  amountInput.addEventListener("input", convertCurrency);
+
+  // Initialize the application
+  async function initialize() {
+    await populateCurrencyDropdowns();
+    // Add a small delay to ensure the dropdowns are populated before setting default values
+    setTimeout(() => {
+      baseCurrencySelect.value = "USD";
+      targetCurrencySelect.value = "EUR";
+      convertCurrency();
+    }, 500);
+  }
+
+  initialize();
 });
