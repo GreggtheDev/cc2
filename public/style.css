@@ -1,77 +1,116 @@
 body {
   font-family: Arial, sans-serif;
+  /* Set the font family for the body to Arial or a default sans-serif */
   background-color: #f4f4f4;
+  /* Set the background color of the body to a light grey */
   margin: 0;
+  /* Remove default margin */
   padding: 0;
+  /* Remove default padding */
 }
 
 .container {
   width: 100%;
+  /* Set the container width to 100% */
   max-width: 600px;
+  /* Set the maximum width of the container to 600px */
   margin: 50px auto;
+  /* Center the container and add a 50px margin on top */
   background: #fff;
+  /* Set the background color of the container to white */
   padding: 20px;
+  /* Add 20px padding inside the container */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* Add a subtle shadow around the container */
   border-radius: 8px;
+  /* Round the corners of the container */
 }
 
 h1 {
   text-align: center;
+  /* Center the text inside h1 */
   color: #333;
+  /* Set the text color to dark grey */
 }
 
 .converter {
   display: flex;
+  /* Use flexbox for the converter container */
   flex-direction: column;
+  /* Arrange children in a column */
 }
 
 label {
   margin-top: 10px;
+  /* Add a 10px margin on top of each label */
 }
 
 input,
 select,
 button {
   margin-top: 5px;
+  /* Add a 5px margin on top */
   padding: 10px;
+  /* Add 10px padding inside */
   font-size: 16px;
+  /* Set the font size to 16px */
   border: 1px solid #ccc;
+  /* Set a light grey border */
   border-radius: 4px;
+  /* Round the corners slightly */
 }
 
 button {
   background: #28a745;
+  /* Set the background color of buttons to a green shade */
   color: white;
+  /* Set the text color to white */
   cursor: pointer;
+  /* Change cursor to pointer on hover */
   margin-top: 15px;
+  /* Add a 15px margin on top */
 }
 
 button:hover {
   background: #218838;
+  /* Change the background color on hover for a darker shade */
 }
 
 #convertedAmount,
 #historicalRate {
   margin-top: 20px;
+  /* Add a 20px margin on top */
   font-size: 18px;
+  /* Set the font size to 18px */
   color: #333;
+  /* Set the text color to dark grey */
 }
 
 #favoritesList {
   margin-top: 20px;
+  /* Add a 20px margin on top */
   list-style-type: none;
+  /* Remove default list styling */
   padding: 0;
+  /* Remove default padding */
 }
 
 #favoritesList li {
   padding: 10px;
+  /* Add 10px padding inside each list item */
   border: 1px solid #ccc;
+  /* Set a light grey border */
   border-radius: 4px;
+  /* Round the corners slightly */
   background: #f9f9f9;
+  /* Set a light grey background */
   margin-top: 5px;
+  /* Add a 5px margin on top */
   cursor: pointer;
+  /* Change cursor to pointer on hover */
 }
 
 #favoritesList li:hover {
   background: #e9ecef;
+  /* Change the background color on hover for a lighter shade */
 }
